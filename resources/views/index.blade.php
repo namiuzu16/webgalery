@@ -882,7 +882,7 @@
                         {{$galery->deskripsi}}
                       </div>
                       <div class="timeline-footer">
-                        <a href="#" data-toggle="modal" data-target="#modalEdit{{ $galery->id }}" class="btn btn-sm bg-warning">Edit</a>
+                        <a href="#" data-toggle="modal" data-target="#modalEdit{{ $galery->id }}" class="btn btn-warning btn-sm">Edit</a>
                         <a class="btn btn-danger btn-sm">Delete</a>
                       </div>
                     </div>
