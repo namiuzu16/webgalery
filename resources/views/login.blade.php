@@ -1,4 +1,4 @@
-use App\Http\Controllers\GaleryController;
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,7 +31,7 @@ use App\Http\Controllers\GaleryController;
           <input type="text" name="username" class="form-control" placeholder="Username">
           <div class="input-group-append">
             <div class="input-group-text">
-              <span class="fas fa-envelope"></span>
+              <span class="fas fa-user"></span>
             </div>
           </div>
         </div>
@@ -70,7 +70,7 @@ use App\Http\Controllers\GaleryController;
       </div> --}}
       <!-- /.social-auth-links -->
 
-      
+
       <p class="mb-0">
         <a href="{{ url('register') }}" class="text-center">Register a new membership</a>
       </p>

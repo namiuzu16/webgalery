@@ -21,3 +21,5 @@ class galery extends Model
     ];
 
 }
+
+// protected $guarded=['foto'];

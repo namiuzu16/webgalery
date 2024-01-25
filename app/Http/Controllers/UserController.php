@@ -82,7 +82,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        
+
     }
 
     public function register()
@@ -101,7 +101,7 @@ class UserController extends Controller
 
         User::create([
             'username' => $data['username'],
-            'name' => $data['name'], 
+            'name' => $data['name'],
             'password' => bcrypt($data['password']),
             'email' => $data['email'],
         ]);
@@ -119,7 +119,7 @@ class UserController extends Controller
 
         $data = $request->only(['username','password']);
         if(Auth::attempt($data)){
-            return redirect('timeline');
+            return redirect('galery');
         }else{
             return redirect('/');
         }

@@ -19,14 +19,20 @@
   <nav class="navbar navbar-expand navbar-dark navbar-black">
     <!-- Left navbar links -->
     <ul class="navbar-nav">
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
+      </li> --}}
       <li class="nav-item d-none d-sm-inline-block">
+        <a href="../../index3.html" class="nav-link">WebGALERY</a>
+      </li>
+      {{-- <li class="nav-item d-none d-sm-inline-block">
         <a href="../../index3.html" class="nav-link">Home</a>
-      </li>
+      </li> --}}
+      {{-- <li class="nav-item d-none d-sm-inline-block">
+        <a data-toggle="modal" data-bs-target="#uploadModal" href="#" class="nav-link btn btn-secondary">Upload <i class=" fa fa-upload"></i></a>
+      </li> --}}
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
+        <a data-toggle="modal" data-target="#uploadModal" href="#" class="nav-link btn btn-secondary">Upload <i class="fa fa-upload"></i></a>
       </li>
     </ul>
 
@@ -55,7 +61,7 @@
       </li>
 
       <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+      {{-- <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
@@ -111,8 +117,8 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
-      </li>
-      <!-- Notifications Dropdown Menu -->
+      </li> --}}
+      {{-- <!-- Notifications Dropdown Menu -->
       <li class="nav-item dropdown">
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-bell"></i>
@@ -138,7 +144,7 @@
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
-      </li>
+      </li> --}}
       <li class="nav-item">
         <a class="nav-link" data-widget="fullscreen" href="#" role="button">
           <i class="fas fa-expand-arrows-alt"></i>
@@ -835,7 +841,7 @@
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h1>Timeline</h1>
+            <h1>Galery</h1>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -852,46 +858,85 @@
       <div class="container-fluid">
 
         <!-- Timelime example  -->
-        <div class="row">
-          <div class="col-md-12">
-            <!-- The time line -->
-            <div class="timeline">
-              <!-- timeline time label -->
-              <div class="time-label">
-                <span class="bg-red">10 Feb. 2014</span>
-              </div>
-              <!-- /.timeline-label -->
-              <!-- timeline item -->
-              <div>
-                <i class="fas fa-envelope bg-blue"></i>
-                <div class="timeline-item">
-                  <span class="time"><i class="fas fa-clock"></i> 12:05</span>
-                  <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
 
-                  <div class="timeline-body">
-                    Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles,
-                    weebly ning heekya handango imeem plugg dopplr jibjab, movity
-                    jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo kaboodle
-                    quora plaxo ideeli hulu weebly balihoo...
+        <div class="row">
+
+            @foreach ($galeries as $galery )
+            <div class="col-md-12">
+                <!-- The time line -->
+                <div class="timeline">
+                  <!-- timeline time label -->
+                  <div class="time-label">
+                    <span class="bg-gradient-secondary" name="tanggal" >{{$galery->tanggal}}</span>
                   </div>
-                  <div class="timeline-footer">
-                    <a class="btn btn-primary btn-sm">Read more</a>
-                    <a class="btn btn-danger btn-sm">Delete</a>
+                  <!-- /.timeline-label -->
+                  <!-- timeline item -->
+                  <div>
+                    <i class="fas fa-user bg-blue"></i>
+                    <div class="timeline-item">
+                      <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+                      <h3 class="timeline-header">{{$galery->judul}}</h3>
+
+                      <div class="timeline-body">
+                        <img class="img-fluid" width="400" height="400" src="{{asset('img/'.$galery->foto)}}" alt="foto"><br>
+                        {{$galery->deskripsi}}
+                      </div>
+                      <div class="timeline-footer">
+                        <a href="#" data-toggle="modal" data-target="#modalEdit{{ $galery->id }}" class="btn btn-sm bg-warning">Edit</a>
+                        <a class="btn btn-danger btn-sm">Delete</a>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <i class="fas fa-clock bg-gray"></i>
                   </div>
                 </div>
-              </div>
+            </div>
+            <div class="modal fade" id="modalEdit{{$galery->id}}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Edit Foto</h3>
+                        </div>
+                        <form action="{{ route('galery.update',$galery->id) }}" method="POST" enctype="multipart/form-data">
+                            @csrf
+                            @method('PUT')
+                            <div class="modal-body">
+                                <div class="form-group">
+                                    <label for="judul">Judul</label>
+                                    <input type="text" value="{{ $galery->judul }}" name="judul" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="deskripsi">Deskripsi</label>
+                                    <input type="text" value="{{ $galery->deskripsi }}" name="deskripsi" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label for="foto">Foto</label>
+                                    <input type="file" name="foto" class="form-control">
+                                    <img src="{{ asset('img/'.$galery->foto) }}" height="150" width="150" alt="">
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                              <button class="btn btn-secondary" type="submit">Simpan</button>
+                              <button class="btn btn-danger" data-dismiss="modal">close</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            @endforeach
               <!-- END timeline item -->
               <!-- timeline item -->
-              <div>
+              {{-- <div>
                 <i class="fas fa-user bg-green"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
                   <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
                 </div>
-              </div>
+              </div> --}}
               <!-- END timeline item -->
               <!-- timeline item -->
-              <div>
+              {{-- <div>
                 <i class="fas fa-comments bg-yellow"></i>
                 <div class="timeline-item">
                   <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
@@ -905,10 +950,10 @@
                     <a class="btn btn-warning btn-sm">View comment</a>
                   </div>
                 </div>
-              </div>
+              </div> --}}
               <!-- END timeline item -->
               <!-- timeline time label -->
-              <div class="time-label">
+              {{-- <div class="time-label">
                 <span class="bg-green">3 Jan. 2014</span>
               </div>
               <!-- /.timeline-label -->
@@ -946,13 +991,8 @@
                     <a href="#" class="btn btn-sm bg-maroon">See comments</a>
                   </div>
                 </div>
-              </div>
+              </div> --}}
               <!-- END timeline item -->
-              <div>
-                <i class="fas fa-clock bg-gray"></i>
-              </div>
-            </div>
-          </div>
           <!-- /.col -->
         </div>
       </div>
@@ -963,11 +1003,74 @@
   </div>
   <!-- /.content-wrapper -->
 
+  <!-- Modal -->
+    {{-- <div class="modal fade" id="uploadModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Upload Foto</h3>
+                </div>
+                <form action="galeri" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="judul">Judul</label>
+                            <input type="text" name="judul" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi">Deskripsi</label>
+                            <input type="text" name="deskripsi" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="foto">Foto</label>
+                            <input type="file" name="foto" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary" type="submit">Submit</button>
+                        <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div> --}}
+    <div class="modal fade" id="uploadModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Upload Foto</h3>
+                </div>
+                <form action="{{ url("galery") }}" method="POST" enctype="multipart/form-data">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="judul">Judul</label>
+                            <input type="text" name="judul" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="deskripsi">Deskripsi</label>
+                            <input type="text" name="deskripsi" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="foto">Foto</label>
+                            <input type="file" name="foto" class="form-control">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" type="submit">Submit</button>
+                        <button class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- ./Modal -->
+
   <footer class="main-footer">
     <div class="float-right d-none d-sm-block">
       <b>Version</b> 3.2.0
     </div>
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
+    <strong>Copyright &copy; 2014-2024 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
   </footer>
 
   <!-- Control Sidebar -->
@@ -977,6 +1080,8 @@
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
+
+
 
 <!-- jQuery -->
 <script src="{{ asset('AdminLTE/plugins/jquery/jquery.min.js') }}"></script>

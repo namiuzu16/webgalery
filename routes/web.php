@@ -1,8 +1,9 @@
 <?php
 
-use App\Http\Controllers\GaleryController;
-use App\Http\Controllers\UserController;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\GaleryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,5 @@ Route::get('register',[UserController::class,'register']);
 Route::post('postregis',[UserController::class,'postregis']);
 Route::post('postlogin',[UserController::class,'postlogin']);
 
-Route::get('timeline',[GaleryController::class,'index'])->middleware('auth');
+Route::resource('galery',GaleryController::class)->middleware('auth');
+// Route::post('galery',[GaleryController::class,'store']);

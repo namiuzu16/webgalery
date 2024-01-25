@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\galery;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class GaleryController extends Controller
 {
@@ -14,7 +15,8 @@ class GaleryController extends Controller
      */
     public function index()
     {
-        return view('index');
+        $galeries = galery::where('user_id',Auth::user()->id)->get();
+        return view('index',['galeries'=>$galeries]);
     }
 
     /**
@@ -36,6 +38,24 @@ class GaleryController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'judul' => 'required',
+            'foto' => 'required',
+            'deskripsi' => 'required',
+        ]);
+
+        $namafoto = Auth::user()->id.'-' .date('YmdHis').
+        $request->foto->getClientOriginalName();
+        $data = [
+            'judul' => $request->judul,
+            'foto' => $namafoto,
+            'deskripsi' => $request->deskripsi,
+            'tanggal' => now(),
+            'user_id' =>Auth::user()->id,
+        ];
+        galery::create($data);
+        $request->foto->move(public_path('img'),$namafoto);
+        return redirect('galery');
     }
 
     /**
@@ -70,6 +90,26 @@ class GaleryController extends Controller
     public function update(Request $request, galery $galery)
     {
         //
+        if ($request->hasFile('foto')) {
+            $namafoto = Auth::user()->id.'-' .date('YmdHis').
+            $request->foto->getClientOriginalName();
+            $request->foto->move(public_path('img'),$namafoto);
+            $galery->judul = $request->judul;
+            $galery->foto = $namafoto;
+            $galery->deskripsi = $request->deskripsi;
+            $galery->tanggal = now();
+            $galery->user_id = Auth::user()->id;
+            $galery->save();
+        }else{
+            $galery->judul=$request->judul;
+            $galery->foto=$galery->foto;
+            $galery->deskripsi=$request->deskripsi;
+            $galery->tanggal = now();
+            $galery->user_id=Auth::user()->id;
+            $galery->save();
+        }
+
+        return redirect('galery');
     }
 
     /**
