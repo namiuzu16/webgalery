@@ -64,9 +64,12 @@ class GaleryController extends Controller
      * @param  \App\Models\galery  $galery
      * @return \Illuminate\Http\Response
      */
-    public function show(galery $galery)
+    public function show($id)
     {
         //
+        galery::where('id','=',$id)->delete();
+        return redirect('galery');
+
     }
 
     /**
@@ -122,4 +125,6 @@ class GaleryController extends Controller
     {
         //
     }
+
+
 }

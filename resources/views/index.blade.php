@@ -23,7 +23,7 @@
         <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
       </li> --}}
       <li class="nav-item d-none d-sm-inline-block">
-        <a href="../../index3.html" class="nav-link">WebGALERY</a>
+        <a href="" class="nav-link">WebGALERY</a>
       </li>
       {{-- <li class="nav-item d-none d-sm-inline-block">
         <a href="../../index3.html" class="nav-link">Home</a>
@@ -146,17 +146,21 @@
         </div>
       </li> --}}
       <li class="nav-item">
-        <a class="nav-link" data-widget="fullscreen" href="#" role="button">
-          <i class="fas fa-expand-arrows-alt"></i>
-        </a>
-      </li>
-      <li class="nav-item">
         <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
           <i class="fas fa-th-large"></i>
         </a>
       </li>
+      <li class="nav-item">
+        <a href="{{ url('logout') }}" class="nav-link" role="button">
+            <i class="fas fa-sign-out-alt fa-sm fa-fw"></i>
+        </a>
+        {{-- <a href="" data-toggle="modal" data-target="#modalLogout" class="btn btn-warning btn-sm">
+            <i class="fas fa-logout"></i>
+        </a> --}}
+      </li>
     </ul>
   </nav>
+
   <!-- /.navbar -->
 
   <!-- Main Sidebar Container -->
@@ -846,7 +850,7 @@
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Timeline</li>
+              <li class="breadcrumb-item active">Galery</li>
             </ol>
           </div>
         </div>
@@ -883,7 +887,7 @@
                       </div>
                       <div class="timeline-footer">
                         <a href="#" data-toggle="modal" data-target="#modalEdit{{ $galery->id }}" class="btn btn-warning btn-sm">Edit</a>
-                        <a class="btn btn-danger btn-sm">Delete</a>
+                        <a href="" data-toggle="modal" data-target="#modalHapus{{ $galery->id }}" class="btn btn-danger btn-sm">Delete</a>
                       </div>
                     </div>
                   </div>
@@ -892,6 +896,35 @@
                   </div>
                 </div>
             </div>
+            <div class="modal fade" id="modalHapus{{$galery->id}}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Hapus Foto</h3>
+                        </div>
+                        <div class="modal-body">
+                            <p>Yakin Ingin Menghapusnya?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{url('galery/'.$galery->id)}}" class="btn btn-danger">Hapus</a>
+                            <button class="btn btn-warning" data-dismiss="modal">close</button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+            {{-- <div class="modal fade" id="modalLogout{{$galery->user_id}}" tabindex="-1">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3 class="modal-title">Logout User</h3>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="{{url('logout/'.$galery->user_id)}}" class="btn btn-danger">Logout<i class="fa fa-logout"></i></a>
+                            <button class="btn btn-warning" data-dismiss="modal">close</button>
+                          </div>
+                    </div>
+                </div>
+            </div> --}}
             <div class="modal fade" id="modalEdit{{$galery->id}}" tabindex="-1">
                 <div class="modal-dialog">
                     <div class="modal-content">
